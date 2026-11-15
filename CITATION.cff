@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Can a vortex in magic-angle graphene host a Majorana zero mode? A geometric obstruction, and the measurement that settles it"
+authors:
+  - family-names: Bilgin
+    given-names: Faruk Sami
+    affiliation: Independent Researcher
+    orcid: "https://orcid.org/0009-0001-9064-4410"
+date-released: 2026-11-15
+repository-code: "https://github.com/FarukSamiBilgin/matbg-vortex-majorana"
+license: CC-BY-4.0
+type: dataset

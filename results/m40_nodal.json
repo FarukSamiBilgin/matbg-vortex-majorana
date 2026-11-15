@@ -1,0 +1,531 @@
+{
+ "_meta": {
+  "script": "run_m40_nodal.py",
+  "module": "M40 -- can a localised vortex Majorana exist in a NODAL MATBG superconductor?",
+  "claim_class": "ANALYTIC DESK CALCULATION on published literature numbers. NOT a BdG solve, NOT a transport simulation, NOT a measurement. Scaling arguments are labelled DERIVED_HERE.",
+  "deterministic": true,
+  "rng": null,
+  "inputs_read": [
+   "out/m39_vortex_device.json -- device geometry, minigap, L3 criterion, splitting law",
+   "out/m38_vortex.json -- the CdGM route being tested",
+   "paper/M38_VERIFICATION.md, paper/M39_VORTEX_DEVICE.md, paper/DECISIONS_LOG.md (W-9, W-10, A-10)"
+  ],
+  "materials_correction": "arXiv:2503.16410 measures magic-angle twisted TRILAYER graphene (MATTG; theta_top ~ 1.42 deg, theta_bottom ~ 1.55 deg), in a MATTG / 3-layer-hBN / MATTG planar tunnel junction.  paper/DECISIONS_LOG.md attributes it to MATBG.  M38 section 3 gets it right in the prose and wrong in the summary table."
+ },
+ "part1_volovik_dos_at_the_working_field": {
+  "what": "zero-energy quasiparticle density of states produced by a nodal gap at M39's 2.76 mT vortex-placement field, against M39's own rung-L3 hard-gap kill criterion G(0)/G_N < 0.05",
+  "placement_field_mT": 2.76,
+  "hard_gap_criterion": 0.05,
+  "route_A_measured_extrapolation": [
+   {
+    "route": "A -- extrapolation of the MEASURED sqrt(B) fit",
+    "reference_field": "MATTG measured Bc,perp = 40 mT (Park et al.)",
+    "N_over_Nn_at_2p76mT": 0.2627
+   },
+   {
+    "route": "A -- extrapolation of the MEASURED sqrt(B) fit",
+    "reference_field": "MATBG dome median Bc2 = 125 mT",
+    "N_over_Nn_at_2p76mT": 0.1486
+   },
+   {
+    "route": "A -- extrapolation of the MEASURED sqrt(B) fit",
+    "reference_field": "MATBG dome worst Bc2 = 45 mT",
+    "N_over_Nn_at_2p76mT": 0.2477
+   },
+   {
+    "route": "A -- extrapolation of the MEASURED sqrt(B) fit",
+    "reference_field": "MATBG dome best Bc2 = 210 mT",
+    "N_over_Nn_at_2p76mT": 0.1146
+   }
+  ],
+  "route_B_doppler_via_xi_GL": {
+   "route": "B -- Doppler estimate anchored on xi_GL from the MEASURED Bc2",
+   "formula": "N(B)/N_n = a (pi/sqrt2) sqrt(B/Bc2)",
+   "xi_used_nm": 51.31,
+   "sqrt_B_over_Bc2": 0.1486,
+   "N_over_Nn_a0p3": 0.099,
+   "N_over_Nn_a0p5": 0.165,
+   "N_over_Nn_a0p7": 0.2311
+  },
+  "route_C_doppler_via_v_and_Delta": {
+   "route": "C -- Doppler estimate anchored on the repo's v = 19430 m/s and Delta",
+   "inter_vortex_radius_nm": 488.3,
+   "Doppler_energy_ueV": 13.09,
+   "xi_BCS_hbar_v_over_pi_Delta_nm": 15.75,
+   "N_over_Nn_a0p5": 0.0507,
+   "internal_inconsistency": "xi_GL from the measured Bc2 is 51.3 nm but xi_BCS = hbar v / pi Delta is 15.8 nm -- a factor 3.26.  Routes B and C differ by exactly that factor.  The repo's velocity and its critical field do not describe the same superconductor; this is inherited from M38/M39 and is reported, not resolved."
+  },
+  "spread_of_the_three_routes": {
+   "min": 0.0507,
+   "max": 0.2627,
+   "reading": "5 % to 29 % of the normal-state density of states sits at zero energy at the working field.  Every route meets or exceeds the 5 % hard-gap criterion; the measured-extrapolation route exceeds it by 3-6x."
+  },
+  "zero_field_thermal_floor": {
+   "formula": "G(0)/G_N = 2 ln2 kB T_e / Delta for N(E) = N_n |E|/Delta",
+   "rows": [
+    {
+     "T_e_mK": 5.0,
+     "G0_over_GN_Delta258ueV": 0.0023,
+     "G0_over_GN_Delta159ueV_measured": 0.0038,
+     "passes_L3_at_258ueV": true,
+     "passes_L3_at_159ueV": true
+    },
+    {
+     "T_e_mK": 10.0,
+     "G0_over_GN_Delta258ueV": 0.0046,
+     "G0_over_GN_Delta159ueV_measured": 0.0075,
+     "passes_L3_at_258ueV": true,
+     "passes_L3_at_159ueV": true
+    },
+    {
+     "T_e_mK": 20.0,
+     "G0_over_GN_Delta258ueV": 0.0092,
+     "G0_over_GN_Delta159ueV_measured": 0.015,
+     "passes_L3_at_258ueV": true,
+     "passes_L3_at_159ueV": true
+    },
+    {
+     "T_e_mK": 30.0,
+     "G0_over_GN_Delta258ueV": 0.0139,
+     "G0_over_GN_Delta159ueV_measured": 0.0225,
+     "passes_L3_at_258ueV": true,
+     "passes_L3_at_159ueV": true
+    },
+    {
+     "T_e_mK": 50.0,
+     "G0_over_GN_Delta258ueV": 0.0231,
+     "G0_over_GN_Delta159ueV_measured": 0.0376,
+     "passes_L3_at_258ueV": true,
+     "passes_L3_at_159ueV": true
+    },
+    {
+     "T_e_mK": 100.0,
+     "G0_over_GN_Delta258ueV": 0.0462,
+     "G0_over_GN_Delta159ueV_measured": 0.0751,
+     "passes_L3_at_258ueV": true,
+     "passes_L3_at_159ueV": false
+    },
+    {
+     "T_e_mK": 150.0,
+     "G0_over_GN_Delta258ueV": 0.0693,
+     "G0_over_GN_Delta159ueV_measured": 0.1127,
+     "passes_L3_at_258ueV": false,
+     "passes_L3_at_159ueV": false
+    }
+   ],
+   "T_e_ceiling_for_L3_mK_Delta258": 108.2,
+   "T_e_ceiling_for_L3_mK_Delta159": 66.5,
+   "reading": "At ZERO field a clean nodal gap PASSES L3 at 20 mK -- 0.9 % (Delta = 258 ueV) or 1.5 % (measured 159 ueV).  The nodal gap is not detectable by a zero-field hard-gap check at dilution temperatures.  The kill is entirely at finite field."
+  },
+  "contrast_against_the_quantised_ZBP_test": [
+   {
+    "estimate": "A / MATTG 40 mT",
+    "nodal_background_in_units_of_2e2_over_h": 0.2627,
+    "measured_height_would_be": 1.1927,
+    "error_on_the_2e2_over_h_test_pct": 26.3,
+    "exceeds_M39_7pct_quantisation_margin": true
+   },
+   {
+    "estimate": "A / MATBG 125 mT",
+    "nodal_background_in_units_of_2e2_over_h": 0.1486,
+    "measured_height_would_be": 1.0786,
+    "error_on_the_2e2_over_h_test_pct": 14.9,
+    "exceeds_M39_7pct_quantisation_margin": true
+   },
+   {
+    "estimate": "B / a=0.5, 125 mT",
+    "nodal_background_in_units_of_2e2_over_h": 0.165,
+    "measured_height_would_be": 1.095,
+    "error_on_the_2e2_over_h_test_pct": 16.5,
+    "exceeds_M39_7pct_quantisation_margin": true
+   },
+   {
+    "estimate": "C / v,Delta",
+    "nodal_background_in_units_of_2e2_over_h": 0.0507,
+    "measured_height_would_be": 0.9807,
+    "error_on_the_2e2_over_h_test_pct": 5.1,
+    "exceeds_M39_7pct_quantisation_margin": false
+   }
+  ],
+  "sources": {
+   "sqrt(B) Volovik measurement": "Park, Sun, Watanabe, Taniguchi, Jarillo-Herrero, arXiv:2503.16410, Fig. 5c; Science (2025/2026)",
+   "Volovik effect": "G. E. Volovik, JETP Lett. 58, 469 (1993)",
+   "specific-heat confirmation in a d-wave SC": "K. A. Moler et al., Phys. Rev. Lett. 73, 2744 (1994)",
+   "Bc2 compilation": "Qin, Zou & MacDonald, Phys. Rev. B 107, 024509 (2023), arXiv:2102.10504, Table I",
+   "M39 peak height and L3 criterion": "out/m39_vortex_device.json"
+  }
+ },
+ "part2_flux_quantum_contradiction": {
+  "surviving_corners": [
+   {
+    "Bc2_perp_mT": 210.0,
+    "route": "A_measured_extrapolation",
+    "B_for_5pct_Volovik_DOS_mT": 0.525,
+    "mesa_area_um2_for_one_vortex_at_that_field": 3.94,
+    "resulting_LittleParks_window_mT": 0.525,
+    "remanent_field_floor_mT": 0.5,
+    "window_beats_remanent": true,
+    "shortfall_factor": 0.95
+   }
+  ],
+  "what": "whether ANY mesa area simultaneously (i) keeps the nodal Volovik zero-energy DOS below M39's own 5 % hard-gap criterion and (ii) keeps the Little-Parks window above the ~0.5 mT remanent field M39 itself names as the binding instrumentation limit",
+  "the_identity": "B(L=1) = Phi0/A_mesa is simultaneously the working field AND the width of the Little-Parks window.  Lowering the field to suppress the Volovik DOS narrows the window by the same factor. There is no free parameter.",
+  "rows": [
+   {
+    "Bc2_perp_mT": 45.0,
+    "route": "A_measured_extrapolation",
+    "B_for_5pct_Volovik_DOS_mT": 0.1125,
+    "mesa_area_um2_for_one_vortex_at_that_field": 18.38,
+    "resulting_LittleParks_window_mT": 0.1125,
+    "remanent_field_floor_mT": 0.5,
+    "window_beats_remanent": false,
+    "shortfall_factor": 4.44
+   },
+   {
+    "Bc2_perp_mT": 45.0,
+    "route": "B_doppler_a0p5",
+    "B_for_5pct_Volovik_DOS_mT": 0.0912,
+    "mesa_area_um2_for_one_vortex_at_that_field": 22.68,
+    "resulting_LittleParks_window_mT": 0.0912,
+    "remanent_field_floor_mT": 0.5,
+    "window_beats_remanent": false,
+    "shortfall_factor": 5.48
+   },
+   {
+    "Bc2_perp_mT": 72.0,
+    "route": "A_measured_extrapolation",
+    "B_for_5pct_Volovik_DOS_mT": 0.18,
+    "mesa_area_um2_for_one_vortex_at_that_field": 11.49,
+    "resulting_LittleParks_window_mT": 0.18,
+    "remanent_field_floor_mT": 0.5,
+    "window_beats_remanent": false,
+    "shortfall_factor": 2.78
+   },
+   {
+    "Bc2_perp_mT": 72.0,
+    "route": "B_doppler_a0p5",
+    "B_for_5pct_Volovik_DOS_mT": 0.1459,
+    "mesa_area_um2_for_one_vortex_at_that_field": 14.17,
+    "resulting_LittleParks_window_mT": 0.1459,
+    "remanent_field_floor_mT": 0.5,
+    "window_beats_remanent": false,
+    "shortfall_factor": 3.43
+   },
+   {
+    "Bc2_perp_mT": 125.0,
+    "route": "A_measured_extrapolation",
+    "B_for_5pct_Volovik_DOS_mT": 0.3125,
+    "mesa_area_um2_for_one_vortex_at_that_field": 6.62,
+    "resulting_LittleParks_window_mT": 0.3125,
+    "remanent_field_floor_mT": 0.5,
+    "window_beats_remanent": false,
+    "shortfall_factor": 1.6
+   },
+   {
+    "Bc2_perp_mT": 125.0,
+    "route": "B_doppler_a0p5",
+    "B_for_5pct_Volovik_DOS_mT": 0.2533,
+    "mesa_area_um2_for_one_vortex_at_that_field": 8.16,
+    "resulting_LittleParks_window_mT": 0.2533,
+    "remanent_field_floor_mT": 0.5,
+    "window_beats_remanent": false,
+    "shortfall_factor": 1.97
+   },
+   {
+    "Bc2_perp_mT": 180.0,
+    "route": "A_measured_extrapolation",
+    "B_for_5pct_Volovik_DOS_mT": 0.45,
+    "mesa_area_um2_for_one_vortex_at_that_field": 4.6,
+    "resulting_LittleParks_window_mT": 0.45,
+    "remanent_field_floor_mT": 0.5,
+    "window_beats_remanent": false,
+    "shortfall_factor": 1.11
+   },
+   {
+    "Bc2_perp_mT": 180.0,
+    "route": "B_doppler_a0p5",
+    "B_for_5pct_Volovik_DOS_mT": 0.3648,
+    "mesa_area_um2_for_one_vortex_at_that_field": 5.67,
+    "resulting_LittleParks_window_mT": 0.3648,
+    "remanent_field_floor_mT": 0.5,
+    "window_beats_remanent": false,
+    "shortfall_factor": 1.37
+   },
+   {
+    "Bc2_perp_mT": 210.0,
+    "route": "A_measured_extrapolation",
+    "B_for_5pct_Volovik_DOS_mT": 0.525,
+    "mesa_area_um2_for_one_vortex_at_that_field": 3.94,
+    "resulting_LittleParks_window_mT": 0.525,
+    "remanent_field_floor_mT": 0.5,
+    "window_beats_remanent": true,
+    "shortfall_factor": 0.95
+   },
+   {
+    "Bc2_perp_mT": 210.0,
+    "route": "B_doppler_a0p5",
+    "B_for_5pct_Volovik_DOS_mT": 0.4255,
+    "mesa_area_um2_for_one_vortex_at_that_field": 4.86,
+    "resulting_LittleParks_window_mT": 0.4255,
+    "remanent_field_floor_mT": 0.5,
+    "window_beats_remanent": false,
+    "shortfall_factor": 1.17
+   }
+  ],
+  "m39_design_point": {
+   "A_mesa_um2": 1.5,
+   "B_L1_mT": 1.379,
+   "B_L2_mT": 2.757,
+   "window_mT": 1.379,
+   "N_over_Nn_at_B_L2_routeA_125mT": 0.1485,
+   "N_over_Nn_at_B_L1_routeA_125mT": 0.105
+  },
+  "solutions_found": 1,
+  "n_rows": 10,
+  "verdict": "9 of 10 rows FAIL.  The shortfall runs from 1.11x (Bc2 = 180 mT, measured-extrapolation route) to 5.5x (Bc2 = 45 mT, Doppler route). Exactly ONE corner survives -- the BEST measured dome device (Bc2 = 210 mT) on the most favourable of the two routes -- and it clears the remanent floor by 5 %, at a mesa area of 3.9 um^2, i.e. 2.6x M39's. M39's own part-3 table already calls a 0.69 mT window at 6 um^2 'comparable to the remanent field of a large solenoid'; a 0.53 mT window at 3.9 um^2 is inside the same danger zone.  This is a geometric contradiction, not a materials one: it does not go away with a better fridge, a better etch or a bigger f_sat, because B(L=1) = Phi0/A_mesa is both quantities at once.",
+  "caveat": "The 5 % figure is M39's own rung-L3 criterion, imported unchanged. The 0.5 mT remanent floor is M39's own part-3 statement. This module adds no new thresholds; it only notices that the two are incompatible once the gap has nodes."
+ },
+ "part3_majorana_splitting_gapped_vs_nodal": {
+  "what": "splitting of the two-vortex fermion parity mode when the mediating quasiparticles are gapless rather than gapped",
+  "M39_design": {
+   "L_sep_nm": 500.0,
+   "xi_M_nm": 49.5,
+   "xi_GL_nm": 51.31,
+   "minigap_ueV": 51.68,
+   "kB_Te_ueV_at_20mK": 1.723,
+   "thermal_FWHM_ueV_at_20mK": 6.08,
+   "mesa_linear_size_nm": 1225.0
+  },
+  "rows": [
+   {
+    "law": "GAPPED: dE = Delta exp(-L/xi_M)   [M39, xi_M = 49.5 nm]",
+    "p": null,
+    "splitting_ueV_at_500nm": 0.010604921121021326,
+    "splitting_neV_at_500nm": 10.605,
+    "ratio_to_minigap": 0.00020519040837418495,
+    "L_for_dE_below_kBTe_nm": 248.0
+   },
+   {
+    "law": "NODAL: dE = Delta (xi/L)^p   [DERIVED_HERE, scaling only]",
+    "p": 1,
+    "splitting_ueV_at_500nm": 26.5194,
+    "splitting_neV_at_500nm": 26519.4,
+    "ratio_to_minigap": 0.51311,
+    "ratio_to_thermal_FWHM_20mK": 4.359,
+    "overstatement_vs_M39_12neV": 2500.7,
+    "L_for_dE_below_kBTe_nm": 7693.6,
+    "L_for_dE_below_M39s_12neV_nm": 1104973.9,
+    "fits_in_1p5um2_mesa": false
+   },
+   {
+    "law": "NODAL: dE = Delta (xi/L)^p   [DERIVED_HERE, scaling only]",
+    "p": 2,
+    "splitting_ueV_at_500nm": 2.7215,
+    "splitting_neV_at_500nm": 2721.5,
+    "ratio_to_minigap": 0.05266,
+    "ratio_to_thermal_FWHM_20mK": 0.4473,
+    "overstatement_vs_M39_12neV": 256.6,
+    "L_for_dE_below_kBTe_nm": 628.3,
+    "L_for_dE_below_M39s_12neV_nm": 7529.8,
+    "fits_in_1p5um2_mesa": true
+   },
+   {
+    "law": "NODAL: dE = Delta (xi/L)^p   [DERIVED_HERE, scaling only]",
+    "p": 3,
+    "splitting_ueV_at_500nm": 0.2793,
+    "splitting_neV_at_500nm": 279.3,
+    "ratio_to_minigap": 0.0054,
+    "ratio_to_thermal_FWHM_20mK": 0.0459,
+    "overstatement_vs_M39_12neV": 26.3,
+    "L_for_dE_below_kBTe_nm": 272.6,
+    "L_for_dE_below_M39s_12neV_nm": 1427.6,
+    "fits_in_1p5um2_mesa": true
+   }
+  ],
+  "reading": "The gapped law gives 12 neV at 500 nm; the p = 1 nodal law gives 26.5 ueV, which is 0.51 x the whole minigap -- the parity mode is destroyed outright.  p = 2 gives 2.7 ueV, still 2.5e5 x M39's number but below the 6.1 ueV thermal resolution at 20 mK.  The separation needed to push the splitting under kB*T_e is 7.7 um at p = 1 -- six times the mesa's own linear size -- and 0.63 um at p = 2.",
+  "caveat_flagged": "The exponent p is NOT established by any literature this module found.  Sato & Fujimoto give t ~ 1/|r-r'| for IMPURITY-mediated coupling between chiral Majorana EDGE modes in a d-wave Rashba superconductor, and state separately that for an EVEN number of vortices the vortex Majorana 'disappears unless they are separated enough'.  They do not compute the vortex-vortex exponent.  The three values are a sensitivity scan, not a prediction.  NO LITERATURE FOUND giving the vortex-vortex Majorana hybridisation law in a nodal 2D superconductor.",
+  "sources": {
+   "nodal-mediated long-range Majorana tunnelling, 1/r, and the even-vortex-number statement": "M. Sato & S. Fujimoto, 'Majorana Fermions in Nodal Superconductors: Gapless Topological Phase', arXiv:1007.4369",
+   "no truly localised bound state in a d-wave vortex core": "M. Franz & Z. Tesanovic, Phys. Rev. Lett. 80, 4763 (1998); O. Vafek, A. Melikyan, M. Franz & Z. Tesanovic, Phys. Rev. B 63, 134509 (2001) -- both as cited by Sato & Fujimoto",
+   "d-wave vortex-lattice quasiparticles are extended Bloch states with Dirac cones": "A. Vishwanath, 'Dirac Nodes and Quantized Thermal Hall Effect in the Mixed State of d-wave Superconductors', arXiv:cond-mat/0104213 (Phys. Rev. B 66, 064504 (2002))",
+   "M39 exponential splitting": "out/m39_vortex_device.json part4"
+  }
+ },
+ "part4_rhombohedral_full_or_nodal": {
+  "what": "is the rhombohedral graphene superconducting gap full or nodal?",
+  "answer": "FULL on the Fermi surface, IF the pairing is the chiral p+ip that Han et al. argue for.  A chiral p-wave gap vanishes only at k = 0, and the quarter metal's Fermi surface does not pass through k = 0.",
+  "status_of_that_answer": "SYMMETRY INFERENCE, NOT MEASUREMENT.  No tunnelling or thermodynamic spectroscopy of the rhombohedral superconducting gap exists.  Han et al. list 'determining the superconducting gap symmetry' as future-work item 2 in their own discussion. NO LITERATURE FOUND reporting a measured gap shape.",
+  "quarter_metal_fermiology": [
+   {
+    "n_e_cm-2": 240000000000.0,
+    "degeneracy_g": 1,
+    "k_F_nm-1": 0.1737,
+    "1_over_kF_nm": 5.76,
+    "node_of_p+ip_at_k0_is_on_the_Fermi_surface": false,
+    "gap_on_the_Fermi_surface": "FULL, |Delta_k| constant around the pocket"
+   },
+   {
+    "n_e_cm-2": 600000000000.0,
+    "degeneracy_g": 1,
+    "k_F_nm-1": 0.2746,
+    "1_over_kF_nm": 3.64,
+    "node_of_p+ip_at_k0_is_on_the_Fermi_surface": false,
+    "gap_on_the_Fermi_surface": "FULL, |Delta_k| constant around the pocket"
+   },
+   {
+    "n_e_cm-2": 1000000000000.0,
+    "degeneracy_g": 1,
+    "k_F_nm-1": 0.3545,
+    "1_over_kF_nm": 2.82,
+    "node_of_p+ip_at_k0_is_on_the_Fermi_surface": false,
+    "gap_on_the_Fermi_surface": "FULL, |Delta_k| constant around the pocket"
+   }
+  ],
+  "thermal_and_antidot_budget_unchanged": [
+   {
+    "Tc_K": 0.3,
+    "Delta_ueV": 45.6,
+    "xi_GL_nm": 15.3,
+    "f_sat_Delta_ueV": 9.12,
+    "T_e_detection_ceiling_mK": 15.0,
+    "Rosenstein_plateau_R_a_nm": [
+     3.1,
+     6.1
+    ],
+    "etchable_with_60nm_practice": false
+   },
+   {
+    "Tc_K": 0.3,
+    "Delta_ueV": 45.6,
+    "xi_GL_nm": 10.0,
+    "f_sat_Delta_ueV": 9.12,
+    "T_e_detection_ceiling_mK": 15.0,
+    "Rosenstein_plateau_R_a_nm": [
+     2.0,
+     4.0
+    ],
+    "etchable_with_60nm_practice": false
+   },
+   {
+    "Tc_K": 0.09,
+    "Delta_ueV": 13.7,
+    "xi_GL_nm": 217.0,
+    "f_sat_Delta_ueV": 2.74,
+    "T_e_detection_ceiling_mK": 4.5,
+    "Rosenstein_plateau_R_a_nm": [
+     43.4,
+     86.8
+    ],
+    "etchable_with_60nm_practice": true
+   }
+  ],
+  "competing_nodal_proposal": "S. A. Murshed, A. L. Szabo & B. Roy, 'Nodal pair-density-waves from quarter-metal in crystalline graphene multilayers', arXiv:2210.15660 -- cited as ref. 26 by Han et al. themselves.  A real (non-chiral) f-wave or a nodal PDW would restore nodes.",
+  "finite_momentum_caveat": "Intra-valley pairing carries Cooper-pair momentum 2K. Yoon & Zhang (arXiv:2603.16828) show by gauge transformation that this is a chiral p-wave SC on the triangular sublattice PLUS an emergent Majorana crystal on a vortex-antivortex lattice on the dual honeycomb lattice, Chern number +-1, with regions of the phase diagram having NO indirect gap.  See also Gaggioli, Guerci & Fu, Phys. Rev. Lett. 135, 116001 (2025).",
+  "sources": {
+   "chiral SC in rhombohedral graphene, PVR >= 15, quarter metal, vortex Majorana expected": "T. Han et al., 'Signatures of chiral superconductivity in rhombohedral graphene', Nature 643, 654 (2025), arXiv:2408.15233",
+   "Read-Green weak pairing, Chern +-1, vortex MZM": "N. Read & D. Green, Phys. Rev. B 61, 10267 (2000)",
+   "further spin-triplet evidence via one-sided WS2 Ising SOC": "K. Kroetzsch et al., 'Surface-Selective Probe of Spin-Triplet Superconductivity in Rhombohedral Graphene', arXiv:2608.03870",
+   "Majorana crystal from the intravalley PDW": "C. Yoon & F. Zhang, 'Majorana Crystal in Rhombohedral Graphene', arXiv:2603.16828",
+   "fermiology caveat on the chirality claim": "Kalantre et al., arXiv:2606.05356 (already in out/m34_rhombohedral.json)"
+  }
+ },
+ "self_check": {
+  "n_checks": 16,
+  "n_failed": 0,
+  "checks": [
+   {
+    "check": "Delta reproduces M39's 258.4 ueV",
+    "pass": true,
+    "detail": "Delta = 258.42 ueV"
+   },
+   {
+    "check": "minigap reproduces M39's 51.7 ueV",
+    "pass": true,
+    "detail": "f_sat*Delta = 51.68 ueV"
+   },
+   {
+    "check": "xi_GL reproduces M39's 51.3 nm at Bc2 = 125 mT",
+    "pass": true,
+    "detail": "xi_GL = 51.31 nm"
+   },
+   {
+    "check": "M39's exponential splitting reproduces its 12 neV",
+    "pass": true,
+    "detail": "10.6 neV"
+   },
+   {
+    "check": "B(L=2) reproduces M39's 2.76 mT at A = 1.5 um^2",
+    "pass": true,
+    "detail": "2.757 mT"
+   },
+   {
+    "check": "every Volovik route at the working field exceeds or reaches 5 %",
+    "pass": true,
+    "detail": "route A min 0.115, route C 0.051"
+   },
+   {
+    "check": "a clean nodal gap PASSES the L3 hard-gap check at ZERO field at 20 mK (the kill is at finite field, not zero field)",
+    "pass": true,
+    "detail": "G(0)/G_N = 0.0092 at 20 mK"
+   },
+   {
+    "check": "the flux-quantum trade fails at every dome Bc2 except the single best-case corner",
+    "pass": true,
+    "detail": "1 of 10 rows satisfy both constraints; survivor(s): [(210.0, 'A_measured_extrapolation', 0.525)]"
+   },
+   {
+    "check": "the one surviving corner clears the remanent floor by less than 10 %",
+    "pass": true,
+    "detail": "margins [1.05]"
+   },
+   {
+    "check": "p=1 nodal splitting exceeds the thermal resolution at 20 mK",
+    "pass": true,
+    "detail": "dE/FWHM = 4.36"
+   },
+   {
+    "check": "p=1 requires an antidot separation larger than the mesa itself",
+    "pass": true,
+    "detail": "needs 7694 nm in a 1225 nm mesa"
+   },
+   {
+    "check": "the nodal background alone eats M39's 7 % quantisation margin on 3 of 4 estimates, and reaches 73 % of it on the 4th",
+    "pass": true,
+    "detail": "3 of 4 exceed 0.070; backgrounds [0.2627, 0.1486, 0.165, 0.0507]"
+   },
+   {
+    "check": "rhombohedral: the p+ip node at k=0 is off the Fermi surface at every measured quarter-metal density",
+    "pass": true,
+    "detail": "k_F = [0.1737, 0.2746, 0.3545] nm^-1"
+   },
+   {
+    "check": "rhombohedral route B is still thermally dead even with a full gap",
+    "pass": true,
+    "detail": "detection ceiling 15.0 mK"
+   },
+   {
+    "check": "rhombohedral route B's Rosenstein plateau is below the 15 nm etch floor",
+    "pass": true,
+    "detail": "plateau at R_a = [3.1, 6.1] nm"
+   },
+   {
+    "check": "the internal xi inconsistency inherited from M38/M39 is reported, not hidden",
+    "pass": true,
+    "detail": 15.75
+   }
+  ]
+ },
+ "verdict": {
+  "headline": "The nodal evidence KILLS the TBG vortex route as M39 designed it, and it does not kill it by the route the DECISIONS_LOG assumed.",
+  "not_this_reason": "It is NOT true that a nodal superconductor cannot host a vortex Majorana.  Sato & Fujimoto (arXiv:1007.4369) prove the opposite: the PARITY of the Chern number stays well-defined in a gapless superconductor and protects an odd number of Majorana modes at edges and in odd vortices.",
+  "these_reasons": [
+   "(1) Sato & Fujimoto's mechanism requires ANTISYMMETRIC (Rashba-type) spin-orbit coupling plus a Zeeman field plus the Fermi level near an ODD number of time-reversal-invariant momenta where the gap vanishes. Spin-orbit coupling is negligible in graphene -- Biswas, Sensarma & Randeria (arXiv:2606.23994) say so explicitly when constraining moire graphene pairing.  MATBG has none of the three ingredients.",
+   "(2) The same body of evidence that shows nodes shows TIME REVERSAL PRESERVED.  Biswas, Sensarma & Randeria: 'there is no evidence for broken TR in the SC state', and a spin-polarised triplet state is inconsistent with experiment.  Nodal AND time-reversal-symmetric means NOT chiral, and Rosenstein's antidot result -- M39's whole hedge -- is a chiral p+ip calculation.",
+   "(3) There is no gap for the antidot to lift the core states INTO. Rosenstein raises the charged core states to f_sat*Delta; in a nodal superconductor the quasiparticle continuum reaches zero energy along the nodal directions at every antidot radius, and in a vortex LATTICE the low-energy states are extended Bloch states with Dirac cones (Vishwanath, cond-mat/0104213; Franz & Tesanovic, PRL 80, 4763 (1998)), not localised core levels at all.",
+   "(4) At the 2.76 mT working field the Volovik zero-energy DOS is 5-29 % of normal -- M39's own rung-L3 hard-gap kill criterion is 5 %.  And the flux quantum makes the trade all but unsolvable: B(L=1) = Phi0/A_mesa is both the working field and the Little-Parks window, so suppressing the Volovik DOS closes the window by the same factor.  9 of 10 (dome Bc2, estimate) combinations fail; the single survivor clears the remanent floor by 5 % (part 2).",
+   "(5) M39's parity device runs at EVEN vorticity (two antidots, two vortices) -- exactly the case Sato & Fujimoto flag as destroyed by nodal-mediated long-range tunnelling -- and the splitting law goes from exponential to power law (part 3)."
+  ],
+  "the_window": "arXiv:2503.16410 is a TRILAYER measurement.  For BILAYER MATBG the direct evidence points the other way: Tanaka et al. (Nature 638, 99 (2025)) fit the MATBG superfluid stiffness to T^n with n = 2-3 and no nonlinear Meissner effect, which they read as a NODELESS ANISOTROPIC gap; and Kim et al. (Nature 650, 592 (2026), arXiv:2505.17200) resolve a single, FULLY DEVELOPED gap with dI/dV -> 0 at zero bias over nu = -2 to -2.25 in MATTG.  The window is narrow, filling-dependent and bilayer-specific.",
+  "the_measurement_that_tests_it": "One afternoon, on the M39 mesa itself, inserted as rung L3b between the existing L3 and L4: measure G(0)/G_N through the point contact as a function of B_perp in 0.5 mT steps from 0 to Bc2, at fixed gate. sqrt(B) => nodal => the route is dead; flat then activated => full gap => the route survives.  It reuses hardware L3 and L4 already require and it is the same measurement Park et al. published (their Fig. 5c)."
+ }
+}
